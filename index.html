@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whiteout Survival - Halloween Event Calculator | Shield Gaming Esports</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        halloween: {
+                            bg: '#0F0D15',
+                            card: '#181524',
+                            border: '#2D273F',
+                            orange: '#FF7A00',
+                            orangeHover: '#E66E00',
+                            purple: '#8B5CF6',
+                            purpleDark: '#5B21B6',
+                            emerald: '#10B981',
+                            subtext: '#9CA3AF'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0F0D15;
+            color: #F3F4F6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0F0D15;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2D273F;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF7A00;
+        }
+
+        /* Custom glow effects */
+        .glow-orange {
+            box-shadow: 0 0 25px -5px rgba(255, 122, 0, 0.2);
+        }
+        .glow-purple {
+            box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.2);
+        }
+
+        /* Custom Range Slider styling */
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: #FF7A00;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 122, 0, 0.8);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header Navigation Bar -->
+    <header class="bg-halloween-card/90 backdrop-blur-md border-b border-halloween-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            
+            <!-- Branding Header -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-orange-500/20">
+                    <i data-lucide="ghost" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                        Whiteout Survival <span class="text-halloween-orange font-bold text-xs uppercase px-2 py-0.5 rounded bg-orange-500/10 border border-orange-500/20">Halloween Event</span>
+                    </h1>
+                    <p class="text-xs text-halloween-subtext">Created by <span class="text-purple-400 font-semibold">Shield Gaming Esports</span></p>
+                </div>
+            </div>
+
+            <!-- Social Media Action Buttons (Top Right) -->
+            <div class="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end">
+                <!-- YouTube Button -->
+                <a href="https://www.youtube.com/c/ShieldGamingEsports" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-md hover:shadow-red-600/30 transition-all duration-200">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <span>YouTube Channel</span>
+                </a>
+
+                <!-- Discord Button -->
+                <a href="https://discord.gg/E76Fb4bYku" target="_blank" rel="noopener noreferrer" 
+                   class="flex items-center gap-2 px-3.5 py-2 text-xs font-bold text-white bg-[#5865F2] hover:bg-[#4752c4] rounded-xl shadow-md hover:shadow-indigo-600/30 transition-all duration-200">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                    </svg>
+                    <span>Discord Server</span>
+                </a>
+
+                <!-- Reset Button -->
+                <button onclick="resetToDefaults()" title="Reset to default calculations"
+                        class="px-3 py-2 text-xs font-semibold text-halloween-subtext hover:text-white bg-halloween-bg border border-halloween-border hover:border-orange-500/50 rounded-xl transition-all flex items-center gap-1.5">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    <span class="hidden sm:inline">Reset</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container Layout -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- LEFT COLUMN: Dynamic Inputs & Calculations (7 Cols) -->
+        <div class="lg:col-span-7 space-y-6">
+
+            <!-- 1. Target Event Goal Card -->
+            <div class="bg-halloween-card border border-halloween-border rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -right-10 -top-10 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="crosshair" class="w-5 h-5 text-halloween-orange"></i>
+                        <h2 class="text-base font-bold text-white">Target Event Goal</h2>
+                    </div>
+                    <span class="text-xs font-semibold bg-orange-500/10 text-halloween-orange border border-orange-500/20 px-3 py-1 rounded-full">
+                        1 Hit = 20 Candy = 2 Points
+                    </span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-sm mb-2">
+                            <label class="text-gray-300 font-medium">Target Points Goal</label>
+                            <span class="text-halloween-orange font-bold text-base" id="targetPointsVal">12,500 Points</span>
+                        </div>
+                        <input type="range" id="targetPointsInput" min="1000" max="25000" step="250" value="12500" 
+                               class="w-full h-2.5 bg-halloween-bg rounded-lg appearance-none cursor-pointer">
+                        <div class="flex justify-between text-[11px] text-halloween-subtext mt-1.5">
+                            <span>1,000 Pts</span>
+                            <span class="font-semibold text-white">Default: 12,500 Pts (125,000 Candy)</span>
+                            <span>25,000 Pts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. F2P Collection Candy Breakdown -->
+            <div class="bg-halloween-card border border-halloween-border rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-5">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="candy" class="w-5 h-5 text-purple-400"></i>
+                        <h2 class="text-base font-bold text-white">F2P Collection Breakdown</h2>
+                    </div>
+                    <span class="text-xs font-semibold text-purple-300 bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full" id="f2pCandyTotalTag">
+                        Total F2P: 22,800 Candy (2,280 Pts)
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <!-- King of Phantom -->
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border hover:border-purple-500/40 transition">
+                        <label class="block text-gray-300 font-medium mb-1">King of Phantom (7 Days)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="kingPhantomInput" value="11900" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-purple-500 font-bold">
+                            <span class="text-halloween-subtext">Candy</span>
+                        </div>
+                        <p class="text-[10px] text-halloween-subtext mt-1">Daily (250+300+350+400+400 = 1,700) x 7 Days</p>
+                    </div>
+
+                    <!-- Trick or Treat -->
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border hover:border-purple-500/40 transition">
+                        <label class="block text-gray-300 font-medium mb-1">Trick or Treat Average Total</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="trickOrTreatInput" value="2800" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-purple-500 font-bold">
+                            <span class="text-halloween-subtext">Candy</span>
+                        </div>
+                        <p class="text-[10px] text-halloween-subtext mt-1">Avg 400 Daily x 7 Days = 2,800</p>
+                    </div>
+
+                    <!-- Halloween Tune -->
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border hover:border-purple-500/40 transition">
+                        <label class="block text-gray-300 font-medium mb-1">Halloween Tune F2P Total</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="halloweenTuneInput" value="1000" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-purple-500 font-bold">
+                            <span class="text-halloween-subtext">Candy</span>
+                        </div>
+                        <p class="text-[10px] text-halloween-subtext mt-1">(100x4) + (300x2) = 1,000 Candy</p>
+                    </div>
+
+                    <!-- Sugar Storm Total -->
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border hover:border-purple-500/40 transition">
+                        <label class="block text-gray-300 font-medium mb-1">Sugar Storm (Gather + Beasts)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="sugarStormInput" value="7000" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-purple-500 font-bold">
+                            <span class="text-halloween-subtext">Candy</span>
+                        </div>
+                        <p class="text-[10px] text-halloween-subtext mt-1">Gathering 3,000 + Beasts 4,000 = 7,000</p>
+                    </div>
+
+                    <!-- Night of Wonders Free Pack 1 -->
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border hover:border-purple-500/40 transition md:col-span-2">
+                        <label class="block text-gray-300 font-medium mb-1">Night of Wonders Pack 1 (Free)</label>
+                        <div class="flex items-center gap-2">
+                            <input type="number" id="nightOfWondersInput" value="100" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-purple-500 font-bold">
+                            <span class="text-halloween-subtext">Candy</span>
+                        </div>
+                        <p class="text-[10px] text-halloween-subtext mt-1">Free Daily Pack Tier 1 = 100 Candy</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Extra Free Hit Points & Gem Investment -->
+            <div class="bg-halloween-card border border-halloween-border rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i>
+                        <h2 class="text-base font-bold text-white">Free Hit Points & Gem Investment</h2>
+                    </div>
+                    <span class="text-xs font-semibold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
+                        Base Free Points: 4,680
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border">
+                        <label class="block text-gray-300 font-medium mb-1">Free Hit Point Covered</label>
+                        <input type="number" id="freeHitPointsInput" value="1700" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-amber-500 font-bold">
+                        <p class="text-[10px] text-halloween-subtext mt-1">Standard: 1,700 Points</p>
+                    </div>
+
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border">
+                        <label class="block text-gray-300 font-medium mb-1">Returning Speedup Points</label>
+                        <input type="number" id="returningSpeedupInput" value="700" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-amber-500 font-bold">
+                        <p class="text-[10px] text-halloween-subtext mt-1">Cashback: 700 Points</p>
+                    </div>
+
+                    <div class="bg-halloween-bg/70 p-3.5 rounded-xl border border-halloween-border">
+                        <label class="block text-gray-300 font-medium mb-1">Gems Investment</label>
+                        <input type="number" id="gemsInput" value="0" step="100000" class="w-full bg-halloween-card border border-halloween-border rounded-lg px-3 py-1.5 text-white focus:outline-none focus:border-amber-500 font-bold">
+                        <div class="flex gap-1.5 mt-2">
+                            <button onclick="setGems(0)" class="text-[10px] bg-halloween-border hover:bg-amber-500/20 text-gray-300 px-2 py-0.5 rounded">0 Gems</button>
+                            <button onclick="setGems(1000000)" class="text-[10px] bg-halloween-border hover:bg-amber-500/20 text-gray-300 px-2 py-0.5 rounded">1M (+1k Pts)</button>
+                        </div>
+                        <p class="text-[10px] text-amber-400 mt-1" id="gemsToPointsLabel">1,000 Gems = 10 Candy = 1 Point</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Paid Pack Purchase Selector -->
+            <div class="bg-halloween-card border border-halloween-border rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-400"></i>
+                        <h2 class="text-base font-bold text-white">Paid Packs Option Selectors</h2>
+                    </div>
+                    <span class="text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+                        Tiered Bundles
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+                    <button onclick="selectPackTier(0)" id="packTier0" class="p-3 rounded-xl border border-emerald-500 bg-emerald-500/20 text-left transition-all">
+                        <div class="text-gray-400 font-medium">Pure F2P</div>
+                        <div class="text-sm font-bold text-white mt-1">$0 Packs</div>
+                        <div class="text-[10px] text-gray-400 mt-0.5">Base Speedup Needed</div>
+                    </button>
+
+                    <button onclick="selectPackTier(85)" id="packTier85" class="p-3 rounded-xl border border-halloween-border bg-halloween-bg/40 text-left transition-all hover:border-emerald-500/50">
+                        <div class="text-gray-400 font-medium">$5+$10+$20+$50</div>
+                        <div class="text-sm font-bold text-white mt-1">$85 Tier</div>
+                        <div class="text-[10px] text-emerald-400 mt-0.5">Reduces Speedups</div>
+                    </button>
+
+                    <button onclick="selectPackTier(185)" id="packTier185" class="p-3 rounded-xl border border-halloween-border bg-halloween-bg/40 text-left transition-all hover:border-emerald-500/50">
+                        <div class="text-gray-400 font-medium">+$100 Pack Tier</div>
+                        <div class="text-sm font-bold text-white mt-1">$185 Tier</div>
+                        <div class="text-[10px] text-emerald-400 mt-0.5">501 Days Speedup</div>
+                    </button>
+
+                    <button onclick="selectPackTier(285)" id="packTier285" class="p-3 rounded-xl border border-halloween-border bg-halloween-bg/40 text-left transition-all hover:border-emerald-500/50">
+                        <div class="text-gray-400 font-medium">+$100 Pack x2</div>
+                        <div class="text-sm font-bold text-white mt-1">$285 Tier</div>
+                        <div class="text-[10px] text-emerald-400 mt-0.5">335 Days Speedup</div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Output Summaries, Presets & Community Promo (5 Cols) -->
+        <div class="lg:col-span-5 space-y-6">
+
+            <!-- 1. Real-Time Calculation & Speedup Output Card -->
+            <div class="bg-gradient-to-br from-halloween-card via-halloween-card to-purple-950/40 border border-halloween-border rounded-2xl p-6 glow-orange relative overflow-hidden">
+                <h3 class="text-xs font-semibold uppercase tracking-wider text-halloween-orange mb-1">Target Progress Summary</h3>
+                <div class="flex items-baseline justify-between mb-3">
+                    <div>
+                        <span class="text-3xl font-extrabold text-white" id="totalPointsDisplay">4,680</span>
+                        <span class="text-sm text-halloween-subtext font-medium"> / <span id="targetGoalDisplay">12,500</span> Pts</span>
+                    </div>
+                    <span class="text-xl font-bold text-halloween-orange" id="percentageDisplay">37.4%</span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-halloween-bg rounded-full h-3 mb-6 p-0.5 border border-halloween-border">
+                    <div id="progressBar" class="bg-gradient-to-r from-halloween-orange to-amber-400 h-2 rounded-full transition-all duration-300" style="width: 37.4%"></div>
+                </div>
+
+                <!-- Main Speedup Highlight -->
+                <div class="bg-halloween-bg/80 border border-orange-500/30 rounded-xl p-4 text-center">
+                    <div class="text-xs text-halloween-subtext font-medium mb-1">Required Speedup to Reach Goal</div>
+                    <div class="text-3xl font-extrabold bg-gradient-to-r from-amber-300 to-halloween-orange bg-clip-text text-transparent" id="daysRequiredDisplay">
+                        651.7 Days
+                    </div>
+                    <div class="text-xs text-halloween-subtext mt-1" id="hoursRequiredDisplay">
+                        15,640 Total Hours (1 Pt = 10 Candy = 2 Hours)
+                    </div>
+                </div>
+
+                <!-- Deficit Details -->
+                <div class="grid grid-cols-2 gap-3 mt-4 text-center text-xs">
+                    <div class="bg-halloween-bg/60 p-3 rounded-xl border border-halloween-border">
+                        <div class="text-halloween-subtext">Points Remaining</div>
+                        <div class="text-base font-bold text-white mt-0.5" id="remainingPointsDisplay">7,820</div>
+                    </div>
+                    <div class="bg-halloween-bg/60 p-3 rounded-xl border border-halloween-border">
+                        <div class="text-halloween-subtext">Candy Remaining</div>
+                        <div class="text-base font-bold text-purple-400 mt-0.5" id="remainingCandyDisplay">78,200</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Preset Scenarios Comparison Table -->
+            <div class="bg-halloween-card border border-halloween-border rounded-2xl p-6 space-y-3">
+                <div class="flex items-center justify-between border-b border-halloween-border pb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <i data-lucide="layers" class="w-4 h-4 text-halloween-orange"></i>
+                        Preset Scenarios (12,500 Pts Goal)
+                    </h3>
+                </div>
+
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between items-center p-2.5 rounded-xl bg-halloween-bg/60 border border-halloween-border">
+                        <span class="text-gray-300 font-medium">Pure F2P (0 Gems, No Packs)</span>
+                        <span class="font-bold text-amber-400">651 Days Speedup</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 rounded-xl bg-halloween-bg/60 border border-halloween-border">
+                        <span class="text-gray-300 font-medium">F2P with 1M Gems</span>
+                        <span class="font-bold text-amber-400">568 Days Speedup</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 rounded-xl bg-halloween-bg/60 border border-halloween-border">
+                        <span class="text-gray-300 font-medium">F2P + $85 Packs Tier</span>
+                        <span class="font-bold text-emerald-400">570 Days Remaining</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 rounded-xl bg-halloween-bg/60 border border-halloween-border">
+                        <span class="text-gray-300 font-medium">F2P + $185 Packs Tier</span>
+                        <span class="font-bold text-emerald-400">501 Days Remaining</span>
+                    </div>
+                    <div class="flex justify-between items-center p-2.5 rounded-xl bg-halloween-bg/60 border border-halloween-border">
+                        <span class="text-gray-300 font-medium">F2P + $285 Packs Tier</span>
+                        <span class="font-bold text-emerald-400">335 Days Remaining</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Shield Gaming Esports Community Card (Directly BELOW Preset Scenarios Table) -->
+            <div class="bg-gradient-to-b from-[#181628] to-[#110f1d] border border-purple-500/20 rounded-3xl p-6 shadow-2xl relative overflow-hidden flex flex-col items-center text-center glow-purple">
+                
+                <!-- Glowing Red YouTube Play Badge -->
+                <div class="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4 shadow-inner">
+                    <svg class="w-8 h-8 fill-red-500" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                </div>
+
+                <!-- Channel Name & Description -->
+                <h3 class="text-xl font-extrabold text-white tracking-wide mb-2">Shield Gaming Esports</h3>
+                <p class="text-xs text-halloween-subtext max-w-xs leading-relaxed mb-6">
+                    Subscribe for more Whiteout Survival guides, event calculators, and high-level gameplay analysis.
+                </p>
+
+                <!-- Action Links -->
+                <div class="w-full space-y-3">
+                    <!-- YouTube Channel Button -->
+                    <a href="https://www.youtube.com/c/ShieldGamingEsports" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3.5 px-4 rounded-2xl bg-[#E52E2E] hover:bg-[#d02525] text-white font-bold text-sm flex items-center justify-center gap-2.5 transition-all shadow-lg hover:shadow-red-900/40">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                        </svg>
+                        <span>Visit YouTube Channel</span>
+                    </a>
+
+                    <!-- Discord Server Button -->
+                    <a href="https://discord.gg/E76Fb4bYku" target="_blank" rel="noopener noreferrer" 
+                       class="w-full py-3.5 px-4 rounded-2xl bg-[#5865F2] hover:bg-[#4752c4] text-white font-bold text-sm flex items-center justify-center gap-2.5 transition-all shadow-lg hover:shadow-indigo-900/40">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+                        </svg>
+                        <span>Join Discord Server</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Clean Footer (No extra social links) -->
+    <footer class="bg-halloween-card/60 border-t border-halloween-border py-6 text-center text-xs text-halloween-subtext">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>Whiteout Survival Halloween Event Calculator &copy; Shield Gaming Esports. Unofficial fan calculator tool.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        let selectedPackPoints = 0;
+
+        // Inputs
+        const targetPointsInput = document.getElementById('targetPointsInput');
+        const targetPointsVal = document.getElementById('targetPointsVal');
+
+        const kingPhantomInput = document.getElementById('kingPhantomInput');
+        const trickOrTreatInput = document.getElementById('trickOrTreatInput');
+        const halloweenTuneInput = document.getElementById('halloweenTuneInput');
+        const sugarStormInput = document.getElementById('sugarStormInput');
+        const nightOfWondersInput = document.getElementById('nightOfWondersInput');
+
+        const freeHitPointsInput = document.getElementById('freeHitPointsInput');
+        const returningSpeedupInput = document.getElementById('returningSpeedupInput');
+        const gemsInput = document.getElementById('gemsInput');
+
+        // Outputs
+        const f2pCandyTotalTag = document.getElementById('f2pCandyTotalTag');
+        const gemsToPointsLabel = document.getElementById('gemsToPointsLabel');
+        const totalPointsDisplay = document.getElementById('totalPointsDisplay');
+        const targetGoalDisplay = document.getElementById('targetGoalDisplay');
+        const percentageDisplay = document.getElementById('percentageDisplay');
+        const progressBar = document.getElementById('progressBar');
+        const daysRequiredDisplay = document.getElementById('daysRequiredDisplay');
+        const hoursRequiredDisplay = document.getElementById('hoursRequiredDisplay');
+
+        const remainingPointsDisplay = document.getElementById('remainingPointsDisplay');
+        const remainingCandyDisplay = document.getElementById('remainingCandyDisplay');
+
+        function setGems(val) {
+            gemsInput.value = val;
+            calculate();
+        }
+
+        function calculate() {
+            const targetPoints = parseFloat(targetPointsInput.value) || 0;
+            targetPointsVal.innerText = targetPoints.toLocaleString() + ' Points';
+            targetGoalDisplay.innerText = targetPoints.toLocaleString();
+
+            // F2P Candy Sources
+            const king = parseFloat(kingPhantomInput.value) || 0;
+            const trick = parseFloat(trickOrTreatInput.value) || 0;
+            const tune = parseFloat(halloweenTuneInput.value) || 0;
+            const sugar = parseFloat(sugarStormInput.value) || 0;
+            const pack1 = parseFloat(nightOfWondersInput.value) || 0;
+
+            const totalF2PCandy = king + trick + tune + sugar + pack1;
+            const totalF2PPoints = totalF2PCandy / 10; // 10 Candy = 1 Point
+
+            f2pCandyTotalTag.innerText = `Total F2P: ${totalF2PCandy.toLocaleString()} Candy (${totalF2PPoints.toLocaleString()} Pts)`;
+
+            // Hits & Gems
+            const freeHitPoints = parseFloat(freeHitPointsInput.value) || 0;
+            const returningSpeedupPoints = parseFloat(returningSpeedupInput.value) || 0;
+            const gemsSpent = parseFloat(gemsInput.value) || 0;
+            const gemPoints = Math.floor(gemsSpent / 1000); // 1,000 Gems = 1 Point
+
+            gemsToPointsLabel.innerText = `${gemsSpent.toLocaleString()} Gems = ${gemPoints.toLocaleString()} Points`;
+
+            // Total Accumulated Points
+            const totalSecuredPoints = totalF2PPoints + freeHitPoints + returningSpeedupPoints + gemPoints + selectedPackPoints;
+
+            // Update Progress Display
+            totalPointsDisplay.innerText = Math.round(totalSecuredPoints).toLocaleString();
+            const pct = Math.min(100, Math.max(0, (totalSecuredPoints / targetPoints) * 100));
+            percentageDisplay.innerText = pct.toFixed(1) + '%';
+            progressBar.style.width = pct + '%';
+
+            // Deficit Calculation (1 Point = 10 Candy = 2 Hours Speedup)
+            const remainingPoints = Math.max(0, targetPoints - totalSecuredPoints);
+            const remainingCandy = remainingPoints * 10;
+            const speedupHours = remainingPoints * 2;
+            const speedupDays = speedupHours / 24;
+
+            remainingPointsDisplay.innerText = Math.round(remainingPoints).toLocaleString();
+            remainingCandyDisplay.innerText = Math.round(remainingCandy).toLocaleString();
+
+            daysRequiredDisplay.innerText = speedupDays.toFixed(1) + ' Days';
+            hoursRequiredDisplay.innerText = `${Math.round(speedupHours).toLocaleString()} Total Hours`;
+        }
+
+        function selectPackTier(cost) {
+            const tiers = [0, 85, 185, 285];
+            tiers.forEach(t => {
+                const el = document.getElementById(`packTier${t}`);
+                if (t === cost) {
+                    el.className = "p-3 rounded-xl border border-emerald-500 bg-emerald-500/20 text-left transition-all ring-1 ring-emerald-500";
+                } else {
+                    el.className = "p-3 rounded-xl border border-halloween-border bg-halloween-bg/40 text-left transition-all hover:border-emerald-500/50";
+                }
+            });
+
+            // Adjust pack bonus points based on user data tiers
+            if (cost === 0) selectedPackPoints = 0;
+            else if (cost === 85) selectedPackPoints = 980; // ~980 pts offset (~85 days speedup reduced)
+            else if (cost === 185) selectedPackPoints = 1808; // ~150 days speedup reduced
+            else if (cost === 285) selectedPackPoints = 3800; // ~316 days speedup reduced
+
+            calculate();
+        }
+
+        function resetToDefaults() {
+            targetPointsInput.value = 12500;
+            kingPhantomInput.value = 11900;
+            trickOrTreatInput.value = 2800;
+            halloweenTuneInput.value = 1000;
+            sugarStormInput.value = 7000;
+            nightOfWondersInput.value = 100;
+            freeHitPointsInput.value = 1700;
+            returningSpeedupInput.value = 700;
+            gemsInput.value = 0;
+            selectPackTier(0);
+            calculate();
+        }
+
+        // Attach listeners to all dynamic controls
+        const allInputs = [
+            targetPointsInput, kingPhantomInput, trickOrTreatInput, 
+            halloweenTuneInput, sugarStormInput, nightOfWondersInput, 
+            freeHitPointsInput, returningSpeedupInput, gemsInput
+        ];
+
+        allInputs.forEach(input => {
+            input.addEventListener('input', calculate);
+            input.addEventListener('change', calculate);
+        });
+
+        // Initialize Lucide Icons & Calculation Loop on Load
+        window.onload = function() {
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+            calculate();
+        };
+    </script>
+</body>
+</html>
